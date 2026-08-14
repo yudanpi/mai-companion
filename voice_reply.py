@@ -25,6 +25,15 @@ def _whitelist(config: Any) -> set[str]:
     return {str(item).strip() for item in raw if str(item).strip()}
 
 
+def _allowed_source_kinds(config: Any) -> set[str]:
+    raw = _config_value(config, "voice_plugin_source_kinds", [])
+    if isinstance(raw, str):
+        raw = [raw]
+    if not isinstance(raw, Iterable):
+        return set()
+    return {str(item).strip() for item in raw if str(item).strip()}
+
+
 def _text_component(message: dict[str, Any]) -> tuple[str, dict[str, Any]] | None:
     raw_message = message.get("raw_message")
     if not isinstance(raw_message, list) or len(raw_message) != 1:
@@ -43,7 +52,9 @@ def should_transform(message: dict[str, Any], source_kind: str, config: Any) -> 
 
     if not bool(_config_value(config, "voice_reply_enabled", False)):
         return False
-    if str(source_kind or "").strip() != "guided_reply":
+    normalized_source_kind = str(source_kind or "").strip()
+    allowed_source_kinds = {"guided_reply", *_allowed_source_kinds(config)}
+    if normalized_source_kind not in allowed_source_kinds:
         return False
     if str(message.get("platform") or "").strip().lower() != "qq":
         return False

@@ -92,6 +92,20 @@ class VoiceReplyPredicateTests(unittest.TestCase):
         self.assertFalse(voice_reply.should_transform(make_message(is_command=True), "guided_reply", config()))
         self.assertFalse(voice_reply.should_transform(make_message(transformed=True), "guided_reply", config()))
 
+    def test_should_transform_configured_weather_plugin_source(self):
+        message = make_message()
+        config_value = config()
+        config_value.voice_plugin_source_kinds = [
+            "plugin_proactive:maibot-team.current-weather"
+        ]
+        self.assertTrue(
+            voice_reply.should_transform(
+                message,
+                "plugin_proactive:maibot-team.current-weather",
+                config_value,
+            )
+        )
+
     def test_should_skip_non_text_and_oversized_messages(self):
         image = make_message(components=[{"type": "image", "data": "hash"}])
         oversized = make_message()

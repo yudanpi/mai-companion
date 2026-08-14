@@ -37,6 +37,10 @@ class MaiCompanionConfig(PluginConfigBase):
         default_factory=list,
         description="允许发送语音回复的 QQ 私聊白名单",
     )
+    voice_plugin_source_kinds: list[str] = Field(
+        default_factory=lambda: ["plugin_proactive:maibot-team.current-weather"],
+        description="允许转换为语音的插件消息来源标记",
+    )
     tts_url: str = Field(default="http://127.0.0.1:7860", description="IndexTTS WebUI 地址")
     reference_audio_path: str = Field(default="", description="IndexTTS 参考音频完整路径")
     tts_timeout_seconds: float = Field(default=120.0, description="IndexTTS 请求超时秒数")
