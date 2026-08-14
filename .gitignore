@@ -1,0 +1,8 @@
+/config.toml
+__pycache__/
+*.py[cod]
+*.log
+*.wav
+*.mp3
+.venv/
+.env

@@ -1,0 +1,52 @@
+{
+  "manifest_version": 2,
+  "id": "github.yudanpi.mai-companion",
+  "version": "0.2.0",
+  "name": "年上陪伴主动对话",
+  "description": "结合 Maizone QQ 空间动态和公开联网话题，向配置的 QQ 私聊目标发送陪伴消息，并可优先使用本地 IndexTTS 语音。",
+  "author": {
+    "name": "yudanpi",
+    "url": "https://github.com/yudanpi"
+  },
+  "license": "MIT",
+  "urls": {
+    "repository": "https://github.com/yudanpi/mai-companion",
+    "homepage": "https://github.com/yudanpi/mai-companion",
+    "documentation": "https://github.com/yudanpi/mai-companion/blob/main/README.md",
+    "issues": "https://github.com/yudanpi/mai-companion/issues"
+  },
+  "host_application": {
+    "min_version": "1.1.0",
+    "max_version": "1.99.99"
+  },
+  "sdk": {
+    "min_version": "2.5.4",
+    "max_version": "2.99.99"
+  },
+  "dependencies": [
+    {
+      "type": "plugin",
+      "id": "internetsb.maizone",
+      "version_spec": ">=3.0.0"
+    },
+    {
+      "type": "python_package",
+      "name": "httpx",
+      "version_spec": ">=0.24.0"
+    }
+  ],
+  "capabilities": [
+    "send.text",
+    "send.hybrid",
+    "llm.generate",
+    "llm.get_available_models",
+    "config.get",
+    "api.call",
+    "chat.open_session",
+    "message.get_recent"
+  ],
+  "i18n": {
+    "default_locale": "zh-CN",
+    "supported_locales": ["zh-CN"]
+  }
+}
