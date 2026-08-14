@@ -1,5 +1,6 @@
 ﻿import asyncio
 import hashlib
+import os
 import random
 import subprocess
 from pathlib import Path
@@ -81,12 +82,28 @@ class CompanionRunner:
         stdout = stdout_path.open("a", encoding="utf-8")
         stderr = stderr_path.open("a", encoding="utf-8")
         try:
+            # IndexTTS is a local Gradio service. MaiBot may inherit a proxy
+            # environment used for external requests; Gradio's localhost
+            # startup check must bypass it or it can fail with HTTP 502.
+            env = os.environ.copy()
+            for key in (
+                "HTTP_PROXY",
+                "HTTPS_PROXY",
+                "ALL_PROXY",
+                "http_proxy",
+                "https_proxy",
+                "all_proxy",
+            ):
+                env.pop(key, None)
+            env["NO_PROXY"] = "127.0.0.1,localhost"
+            env["no_proxy"] = "127.0.0.1,localhost"
             flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
             process = subprocess.Popen(
-                [str(python_path), "-u", str(script)],
+                [str(python_path), "-u", str(script), "--host", "127.0.0.1"],
                 cwd=str(process_dir),
                 stdout=stdout,
                 stderr=stderr,
+                env=env,
                 creationflags=flags,
             )
             stdout.close()
