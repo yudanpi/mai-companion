@@ -22,10 +22,10 @@ class MaiCompanionConfig(PluginConfigBase):
     request_timeout_seconds: float = Field(default=8.0, description="联网请求超时秒数")
     news_feeds: list[str] = Field(
         default=[
-            "https://feeds.bbci.co.uk/news/world/rss.xml",
-            "https://www.solidot.org/index.rss",
+            "https://www.chinanews.com.cn/rss/scroll-news.xml",
+            "https://www.people.com.cn/rss/ywkx.xml",
         ],
-        description="公开 RSS/Atom 话题来源，每行一个 URL",
+        description="国内公开 RSS/Atom 话题来源，每行一个 URL",
     )
     weather_location: str = Field(default="", description="天气城市；留空则不请求天气")
     memory_retention_days: int = Field(default=90, description="本地非敏感记忆保留天数")

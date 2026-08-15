@@ -57,6 +57,8 @@ python -m unittest discover -s tests -p "test_*.py" -v
 ## 外部连接与进程安全
 
 - `tts_url` 应指向你自己管理的 IndexTTS 服务；默认的本地地址最安全。若使用远程地址，请只填写可信的 HTTPS 服务，避免把参考音频或生成结果发送给不可信的站点。
-- `news_feeds` 只建议配置可信的 RSS/Atom 来源。插件会按这些地址读取公开话题内容。
+- `news_feeds` 默认使用国内公开 RSS：中新网即时新闻
+  (`https://www.chinanews.com.cn/rss/scroll-news.xml`) 和人民网要闻
+  (`https://www.people.com.cn/rss/ywkx.xml`)；也可以按需替换为其他可信来源。
 - 开启 `tts_auto_manage_process` 后，插件只会启动配置的 `tts_python_path` 和 `tts_webui_script`，并且工作目录限定为 `tts_process_dir`；请确认这些路径来自你信任的本机目录。
 - 插件只会关闭自己启动的 IndexTTS 进程；手动启动的 WebUI 不会被插件关闭。
